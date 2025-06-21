@@ -24,7 +24,7 @@ public class Book {
     @Column(nullable = false)
     private Integer copies;
 
-    // Constructors
+    
     public Book() {}
 
     public Book(String title, String author, Integer year, BigDecimal price, Integer copies) {
@@ -35,7 +35,7 @@ public class Book {
         this.copies = copies;
     }
 
-    // Getters and Setters
+    
     public Long getId() {
         return id;
     }
