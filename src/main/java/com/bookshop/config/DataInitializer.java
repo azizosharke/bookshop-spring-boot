@@ -20,7 +20,7 @@ public class DataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        // Create admin user if not exists
+        
         if (!userRepository.existsByUsername("admin")) {
             User admin = new User("admin", "admin123", UserRole.ADMIN);
             admin.setName("Admin");
@@ -29,7 +29,7 @@ public class DataInitializer implements CommandLineRunner {
             userRepository.save(admin);
         }
 
-        // Create sample books if none exist
+        
         if (bookRepository.count() == 0) {
             bookRepository.save(new Book("Java Programming", "John Doe", 2023,
                     new BigDecimal("49.99"), 10));
