@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>BookShop - Checkout</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container">
+    <h1>Checkout</h1>
+
+    <div th:if="${success}" class="success">
+        <h2 th:text="${success}"></h2>
+        <p>Thank you for your order!</p>
+        <div style="margin-top: 2rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+            <a th:href="@{/customer/books}" class="btn-primary">Continue Shopping</a>
+            <a th:href="@{/logout}" class="btn-primary" style="background: #6b7280;">Logout</a>
+        </div>
+    </div>
+
+    <div th:unless="${success}">
+        <div th:if="${error}" class="error" th:text="${error}"></div>
+        <h2>Order Summary</h2>
+        <div th:if="${cart != null && cart.items != null && !cart.items.isEmpty()}">
+            <table>
+                <thead>
+                <tr>
+                    <th>Book</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Subtotal</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="item : ${cart.items}">
+                    <td th:text="${item.book.title}"></td>
+                    <td th:text="${item.quantity}"></td>
+                    <td>$<span th:text="${item.book.price}"></span></td>
+                    <td>$<span th:text="${item.book.price * item.quantity}"></span></td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th colspan="3">Total:</th>
+                    <th>$<span th:text="${cart.totalPrice}"></span></th>
+                </tr>
+                </tfoot>
+            </table>
+
+            <h2>Payment Information</h2>
+            <form th:action="@{/customer/checkout}" method="post">
+                <div class="form-group">
+                    <label>Credit Card Number:</label>
+                    <input type="text" name="creditCard" pattern="[0-9]{16}"
+                           placeholder="1234567890123456" required>
+                </div>
+                <button type="submit">Place Order</button>
+                <a th:href="@{/customer/cart}">Back to Cart</a>
+            </form>
+        </div>
+        <div th:unless="${cart != null && cart.items != null && !cart.items.isEmpty()}">
+            <p>Your cart is empty.</p>
+            <a th:href="@{/customer/books}">Continue Shopping</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

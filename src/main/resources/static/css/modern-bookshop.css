@@ -1,0 +1,295 @@
+/* Modern BookShop 2025 – Accessible & Responsive CSS */
+
+/* ─────────────────────────
+   Theme Tokens – Light Mode
+   ───────────────────────── */
+:root {
+    --color-primary: hsl(220 83% 55%);
+    --color-primary-hover: hsl(220 83% 48%);
+    --color-secondary: hsl(158 73% 47%);
+    --color-danger: hsl(0 84% 60%);
+    --color-bg: hsl(210 20% 98%);
+    --color-surface: hsl(0 0% 100%);
+    --color-border: hsl(210 16% 90%);
+    --color-body: hsl(222 47% 11%);
+    --color-muted: hsl(218 11% 38%);
+    --radius-sm: .375rem;
+    --radius-md: .75rem;
+    --radius-lg: 1rem;
+    --shadow-sm: 0 1px 2px rgb(0 0 0 / .05);
+    --shadow-md: 0 4px 8px rgb(0 0 0 / .08);
+    --shadow-lg: 0 8px 24px rgb(0 0 0 / .1);
+    --transition: .24s cubic-bezier(.4, 0, .2, 1);
+    --step--1: clamp(.83rem, calc(.79rem + .18vw), .92rem);
+    --step-0: clamp(1rem, calc(.95rem + .24vw), 1.13rem);
+    --step-1: clamp(1.25rem, calc(1.18rem + .31vw), 1.42rem);
+    --step-2: clamp(1.56rem, calc(1.48rem + .39vw), 1.78rem);
+    --step-3: clamp(1.95rem, calc(1.85rem + .49vw), 2.22rem);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --color-bg: hsl(222 47% 11%);
+        --color-surface: hsl(222 28% 15%);
+        --color-border: hsl(215 21% 21%);
+        --color-body: hsl(220 13% 91%);
+        --color-muted: hsl(219 13% 55%);
+    }
+}
+
+:where(*) {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:where(html) {
+    scroll-behavior: smooth;
+}
+:where(body) {
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", sans-serif;
+    line-height: 1.6;
+    color: var(--color-body);
+    background-color: var(--color-bg);
+    min-height: 100dvh;
+}
+:where(img, svg, video, canvas, audio, iframe, embed, object) {
+    display: block;
+    max-width: 100%;
+}
+:where(button) {
+    font: inherit;
+    cursor: pointer;
+    border: none;
+    background: none;
+}
+
+.container {
+    width: min(100% - 2rem, 72rem);
+    margin-inline: auto;
+}
+
+nav {
+    background: linear-gradient(135deg, var(--color-body) 0%, hsl(215 20% 20%) 100%);
+    padding-block: .75rem;
+    margin-block-end: 2rem;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: .5rem;
+}
+nav a {
+    color: #fff;
+    padding: .5rem 1rem;
+    border-radius: var(--radius-sm);
+    font-weight: 500;
+    will-change: transform;
+    transition: background var(--transition), transform var(--transition);
+}
+nav a:is(:hover, :focus-visible) {
+    background-color: rgb(255 255 255 / .12);
+    transform: translateY(-2px);
+}
+
+h1 { font-size: var(--step-3); }
+h2 { font-size: var(--step-2); }
+h3 { font-size: var(--step-1); }
+
+.book-grid {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(15rem, 100%), 1fr));
+}
+
+.book-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem;
+    box-shadow: var(--shadow-sm);
+    transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
+}
+.book-card:is(:hover, :focus-within) {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-4px);
+}
+.book-card h3 {
+    color: var(--color-primary);
+    margin-block-end: .75rem;
+}
+.book-card p {
+    color: var(--color-muted);
+    margin-block: .25rem;
+    display: flex;
+    justify-content: space-between;
+    gap: .5rem;
+}
+.book-card p span {
+    color: var(--color-body);
+    font-weight: 500;
+}
+
+.form-group {
+    margin-block-end: 1.25rem;
+}
+.form-group label {
+    display: block;
+    margin-block-end: .25rem;
+    font-weight: 600;
+    color: var(--color-body);
+}
+input:not([type="number"]),
+textarea {
+    width: 100%;
+    padding: .65rem .9rem;
+    border: 1.5px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    background: var(--color-surface);
+    font-size: 1rem;
+    transition: border-color var(--transition), box-shadow var(--transition);
+}
+input:focus-visible,
+textarea:focus-visible {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px hsl(220 83% 55% / .25);
+}
+textarea {
+    resize: vertical;
+    min-height: 6rem;
+}
+
+button,
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    font-weight: 600;
+    padding: .65rem 1.5rem;
+    border-radius: var(--radius-sm);
+    background: var(--color-primary);
+    color: #fff;
+    transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+}
+button:is(:hover, :focus-visible),
+.btn:is(:hover, :focus-visible) {
+    background: var(--color-primary-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+button:disabled {
+    background: hsl(215 15% 70%);
+    cursor: not-allowed;
+}
+
+.book-card button {
+    background: var(--color-secondary);
+}
+.book-card button:is(:hover, :focus-visible) {
+    background: hsl(158 73% 40%);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    overflow: hidden;
+    background: var(--color-surface);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+}
+table :is(th, td) {
+    padding: .75rem 1rem;
+    border-bottom: 1px solid var(--color-border);
+    text-align: left;
+}
+table th {
+    background: hsl(215 28% 17%);
+    color: #fff;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: .85rem;
+    letter-spacing: .04em;
+}
+tbody tr:is(:hover, :focus-within) {
+    background: hsl(0 0% 97%);
+}
+table tfoot th {
+    background: var(--color-bg);
+    color: var(--color-body);
+    font-size: 1rem;
+}
+
+.flash {
+    padding: 1rem;
+    border-radius: var(--radius-sm);
+    margin-block-end: 1.25rem;
+    font-weight: 500;
+}
+.flash--error {
+    background: hsl(0 100% 97%);
+    color: var(--color-danger);
+    border: 1px solid hsl(0 84% 90%);
+}
+.flash--success {
+    background: hsl(158 80% 95%);
+    color: hsl(158 64% 20%);
+    border: 1px solid hsl(158 64% 63%);
+}
+
+.hero {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-hover) 100%);
+    color: #fff;
+    padding: clamp(2.5rem, 8vw, 6rem) 2rem;
+    border-radius: var(--radius-lg);
+    text-align: center;
+    box-shadow: var(--shadow-lg);
+}
+.hero__title { font-size: var(--step-3); margin-block-end: .5rem; }
+.hero__text  { font-size: var(--step-0); margin-block-end: 1.5rem; }
+.hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: .75rem;
+}
+.hero__actions a {
+    background: #fff;
+    color: var(--color-primary);
+    border: 2px solid #fff;
+    padding: .75rem 1.5rem;
+    border-radius: var(--radius-sm);
+    min-width: 12ch;
+    transition: background var(--transition), color var(--transition), transform var(--transition), box-shadow var(--transition);
+}
+.hero__actions a:is(:hover, :focus-visible) {
+    background: transparent;
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+@media (max-width: 50rem) {
+    .book-grid { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--color-bg); }
+::-webkit-scrollbar-thumb {
+    background: var(--color-primary);
+    border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--color-primary-hover); }

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>BookShop - Browse Books</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container">
+    <h1>Available Books</h1>
+
+    <nav>
+        <a th:href="@{/}">Home</a>
+        <span th:if="${session.userId}">
+                <a th:href="@{/customer/cart}">View Cart</a>
+                <a th:href="@{/logout}">Logout</a>
+            </span>
+        <span th:unless="${session.userId}">
+                <a th:href="@{/login}">Login to Add to Cart</a>
+            </span>
+    </nav>
+
+    <!-- Success message -->
+    <div th:if="${message}" class="success" style="padding: 1rem; margin-bottom: 1rem;">
+        <span th:text="${message}"></span>
+    </div>
+
+    <div class="book-grid">
+        <div th:each="book : ${books}" class="book-card">
+            <h3 th:text="${book.title}"></h3>
+            <p>Author: <span th:text="${book.author}"></span></p>
+            <p>Year: <span th:text="${book.year}"></span></p>
+            <p>Price: $<span th:text="${book.price}"></span></p>
+            <p>Available: <span th:text="${book.copies}"></span> copies</p>
+
+            <form th:if="${session.userId}" th:action="@{/customer/cart/add}" method="post">
+                <input type="hidden" name="bookId" th:value="${book.id}">
+                <input type="number" name="quantity" value="1" min="1" th:max="${book.copies}">
+                <button type="submit" th:disabled="${book.copies == 0}">Add to Cart</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

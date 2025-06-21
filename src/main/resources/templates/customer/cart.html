@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>BookShop - Shopping Cart</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container">
+    <h1>Shopping Cart</h1>
+
+    <nav>
+        <a th:href="@{/customer/books}">Continue Shopping</a>
+        <a th:href="@{/logout}">Logout</a>
+    </nav>
+
+    <!-- Success/Info Message for removed items -->
+    <div th:if="${message}" class="success" style="margin: 1rem 0;">
+        <span th:text="${message}"></span>
+    </div>
+
+    <div th:if="${cart != null && !cart.items.isEmpty()}">
+        <table>
+            <thead>
+            <tr>
+                <th>Book</th>
+                <th>Author</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Subtotal</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item : ${cart.items}">
+                <td th:text="${item.book.title}"></td>
+                <td th:text="${item.book.author}"></td>
+                <td th:text="${'$' + item.book.price}"></td>
+                <td th:text="${item.quantity}"></td>
+                <td>$<span th:text="${item.book.price * item.quantity}"></span></td>
+                <td>
+                    <a th:href="@{/customer/cart/remove/{id}(id=${item.id})}"
+                       onclick="return confirm('Are you sure you want to remove this item from your cart?')">Remove</a>
+                </td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <th colspan="4">Total:</th>
+                <th th:text="${'$' + cart.totalPrice}"></th>
+                <th></th>
+            </tr>
+            </tfoot>
+        </table>
+
+        <div class="cart-actions">
+            <a th:href="@{/customer/checkout}" class="btn-primary">Proceed to Checkout</a>
+        </div>
+    </div>
+
+    <div th:if="${cart == null || cart.items.isEmpty()}">
+        <p>Your cart is empty.</p>
+        <a th:href="@{/customer/books}" class="btn-primary">Continue Shopping</a>
+    </div>
+</div>
+</body>
+</html>
