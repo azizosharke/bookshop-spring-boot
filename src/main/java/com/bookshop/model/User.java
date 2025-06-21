@@ -32,7 +32,7 @@ public class User {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Cart cart;
 
-    // Constructors
+    
     public User() {}
 
     public User(String username, String password, UserRole role) {
@@ -41,7 +41,7 @@ public class User {
         this.role = role;
     }
 
-    // Getters and Setters
+    
     public Long getId() {
         return id;
     }
