@@ -27,20 +27,20 @@ public class CartService {
         Book book = bookRepository.findById(bookId).orElse(null);
 
         if (cart == null) {
-            // Create cart if it doesn't exist
+            
             cart = new Cart(user);
             cart = cartRepository.save(cart);
         }
 
         if (book != null && book.getCopies() >= quantity) {
-            // Check if item already exists in cart
+            
             CartItem existingItem = cart.getItems().stream()
                     .filter(item -> item.getBook().getId().equals(bookId))
                     .findFirst()
                     .orElse(null);
 
             if (existingItem != null) {
-                // Check if total quantity doesn't exceed available copies
+                
                 int newQuantity = existingItem.getQuantity() + quantity;
                 if (newQuantity <= book.getCopies()) {
                     existingItem.setQuantity(newQuantity);
@@ -70,7 +70,7 @@ public class CartService {
         }
     }
 
-    // Add this method for checkout processing
+    
     @Transactional
     public boolean processCheckout(User user) {
         Cart cart = getCartByUser(user);
@@ -78,22 +78,22 @@ public class CartService {
             return false;
         }
 
-        // Check if all items are still available
+        
         for (CartItem item : cart.getItems()) {
             Book book = item.getBook();
             if (book.getCopies() < item.getQuantity()) {
-                return false; // Not enough copies available
+                return false; 
             }
         }
 
-        // Update book inventory
+        
         for (CartItem item : cart.getItems()) {
             Book book = item.getBook();
             book.setCopies(book.getCopies() - item.getQuantity());
             bookRepository.save(book);
         }
 
-        // Clear the cart after successful checkout
+        
         clearCart(user);
 
         return true;
