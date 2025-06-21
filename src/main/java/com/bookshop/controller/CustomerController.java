@@ -40,11 +40,11 @@ public class CustomerController {
         Book book = bookService.getBookById(bookId);
         cartService.addToCart(user, bookId, quantity);
 
-        // Add success message
+        
         redirectAttributes.addFlashAttribute("message",
                 "'" + book.getTitle() + "' added to cart successfully!");
 
-        // Redirect back to books page
+        
         return "redirect:/customer/books";
     }
 
@@ -69,7 +69,7 @@ public class CustomerController {
             return "redirect:/login";
         }
 
-        // Get the item details before removing
+        
         Cart cart = cartService.getCartByUser(user);
         String bookTitle = "";
         if (cart != null && cart.getItems() != null) {
@@ -84,7 +84,7 @@ public class CustomerController {
 
         cartService.removeFromCart(user, itemId);
 
-        // Add success message
+       
         redirectAttributes.addFlashAttribute("message",
                 "'" + bookTitle + "' was removed from your cart.");
 
@@ -116,7 +116,7 @@ public class CustomerController {
             return "redirect:/login";
         }
 
-        // Process the checkout and update inventory
+        
         boolean success = cartService.processCheckout(user);
 
         if (success) {
