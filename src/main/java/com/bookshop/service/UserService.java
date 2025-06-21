@@ -21,7 +21,7 @@ public class UserService {
         user.setRole(UserRole.CUSTOMER);
         User savedUser = userRepository.save(user);
 
-        // Create cart for new customer
+        
         Cart cart = new Cart(savedUser);
         cartRepository.save(cart);
 
