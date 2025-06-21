@@ -19,7 +19,7 @@ public class CartItem {
 
     private Integer quantity;
 
-    // Constructors
+    
     public CartItem() {}
 
     public CartItem(Cart cart, Book book, Integer quantity) {
@@ -28,7 +28,7 @@ public class CartItem {
         this.quantity = quantity;
     }
 
-    // Getters and Setters
+    
     public Long getId() {
         return id;
     }
